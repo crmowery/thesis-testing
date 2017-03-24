@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vis Test</title>
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css">
+<link rel="stylesheet" href="css/d3.parcoords.css">
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script src="js/d3.parcoords.js"></script>
+
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+      <a class="navbar-brand" href="#">Visualization Test Environment</a></div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="defaultNavbar1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.html">Test 1</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+
+<!-- Title Row -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1 class="text-center">Test 1</h1>
+    </div>
+  </div>
+  <hr>
+</div>
+
+      <div class="container">
+         <div class="row">
+          <div id="legend" class="col-md-6 portfolio-item"> </div>
+          <div id="info-label" class="col-md-6 portfolio-item"> </div>
+          </div>
+          <hr>
+      </div>
+
+<div class="container">
+  <div class="row text-center">
+    <div class="col-md-6 col-md-offset-1"> 
+      <div id="map"/> 
+    </div>     
+  </div>
+</div>
+
+
+
+      <div class="container">
+        <div class="col-lg-12">
+          <div class="col-md-12 portfolio-item">
+            <div id="pcp" class="parcoords"/>
+          </div>
+        </div>
+      </div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.3.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
+
+<!--link to main JavaScript file-->
+<script src="js/main.js"></script>
+    
+</body>
+</html>
