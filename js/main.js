@@ -25,13 +25,13 @@ function initialize(){
 
 function setMap(){
 
-  var map = new L.map('map').setView([42, -93.5], 7)
+  var map = new L.map('map').setView([41.57, -93.6], 11)
   .addLayer(new L.TileLayer("http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"));
 
   var svg = d3.select(map.getPanes().overlayPane).append("svg"),
   g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-  d3.json("data/iowa.json", function(error, jsonData) {
+  d3.json("data/desmoines.json", function(error, jsonData) {
     if (error) throw error;
 
 
@@ -110,14 +110,20 @@ function setMap(){
       var format = d3.format(".4n"), scale = d3.scale.linear().domain(
         [ -10, 20, 1000 ]).range([ 0, 800, 1000 ]);
 	  
-        var pcp = d3.parcoords()("#pcp").data(pcpdata).color(function(d) {
+        var pcp = d3.parcoords()("#pcp")
+		.data(pcpdata)
+		.color(function(d) {
           //if value exists, assign it a color; otherwise assign gray
           if (d[expressed]) {
             return recolorMap(d[expressed]); //recolorMap holds the colorScale generator
           } else {
             return "#ccc";
-          };
-        }).render().brushable().on("brush", function(items) {
+          }
+        })
+		.render()
+		.reorderable()
+		.brushable()
+		.on("brush", function(items) {
           var selected = items.map(function(d) {
             return d[key];
           });
