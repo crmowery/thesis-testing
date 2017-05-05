@@ -1,12 +1,16 @@
 //set the colors and the id field
 var initialColors = [
-  '#feebe2',
-  '#fbb4b9',
-  '#f768a1',
-  '#c51b8a',
-  '#7a0177'
+  '#dddddd',
+  '#7bb3d1',
+  '#016eae',
+  '#dd7c8a',
+  '#8d6c8f',
+  '#4a4779',
+  '#cc0024',
+  '#8a274a',
+  '#4b264d'
 ];
-var key = "OBJECTID";
+var key = "Population";
 
 
 var attNames = [];
@@ -52,9 +56,14 @@ function setMap(){
       cnt++;
       pcpdata.push(d.properties);
     });
-    attNames.splice(0, 2);
-    expressed = attNames[0];
-
+    expressed = attNames[4];
+	
+	//removes first three axes from pcp
+    for(var i = 0; i < pcpdata.length; i++) {
+    delete pcpdata[i]['OBJECTID'];
+    delete pcpdata[i]['Shape_Leng'];
+    delete pcpdata[i]['Shape_Area'];
+}
     var recolorMap = colorScale(jsonData.features);
 
     //add Iowa regions geometry to map
