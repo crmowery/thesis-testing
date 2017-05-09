@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vis Test</title>
+
+<link rel="stylesheet" href="css/bootstrap.css" >
+
+<style>
+      .axis {
+        font-size: 10px;
+      }
+      .axis path {
+        fill: none;
+        stroke: #000000;
+      }
+      .axis .tick line {
+        stroke: #000;
+      }
+        
+      .desmoines {
+            fill: #ccc;
+            stroke: #fff;
+      }
+	
+	#legend {
+	position: absolute;
+	right: 0px;
+	top: 300px;
+	height: 250px;
+	width: 250px;
+}
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+      <a class="navbar-brand" href="testB.html">Visualization Test Environment</a></div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="defaultNavbar1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.html">Test A</a></li>
+        <li><a href="testB.html">Test B</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
+
+<!-- Title Row -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1 class="text-center">Test B</h1>
+    </div>
+  </div>
+  <hr>
+</div>
+   
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script src="scatter.js"></script>
+    <script src="brush.js"></script>
+    <script src="symbol_map.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+
+  
+    <script>
+        
+        var Vis = {};
+        Vis.data = new Array();
+    
+        //http://bl.ocks.org/mbostock/4342045
+        var width = 960,
+        height = 500;
+        var data;
+
+		//tells the program which data to load on top of the svg map
+        var json_file = "points.json";
+
+        var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+        
+        var mapgroup = svg.append("g")
+        ;
+        
+        //Define map projection
+        var projection = d3.geo.albersUsa()
+            .translate([-2000, 3750])
+            .scale([70000]);
+        
+        
+        var path = d3.geo.path()
+            .projection(projection);
+			
+        queue()
+        .defer(d3.json, "us.json")
+        .await(ready);
+        
+		//Function readies SVG for background map
+        function ready(error, us) {
+            if (error) throw error;
+			
+             mapgroup.append("path")
+            .attr("class", "desmoines")
+            .datum(topojson.feature(us, us.objects.desmoines))
+            .attr("d", path);
+			
+            loadJson(json_file);
+            
+        }
+      
+		//Creates scatter/brush/points on top of svg map
+      function createDiagram() {
+		  
+          var sgroup = svg.append("g")
+          .attr("transform", "translate(50, 0)")
+          var scatter = d3.chart.scatter()
+          scatter.data(Vis.data)
+          scatter(sgroup)
+		  
+          var symbol_map = d3.chart.symbol_map()
+          symbol_map.data(Vis.data)
+          symbol_map(mapgroup)
+          
+          //brush
+          var bgroup = svg.append("g")
+          .attr("transform", "translate(100, 430)")
+          var brush = d3.chart.brush()
+		  
+          brush
+          .data(Vis.data)
+          .width(800)
+          brush(bgroup)
+          
+          brush.on("filter", function(filtered) {
+                   scatter.data(filtered);
+                   scatter.update();
+                   symbol_map.data(filtered)
+                   symbol_map.update();
+                   })
+                   
+          scatter.on("hover", function(hovered) {
+                              brush.highlight(hovered)
+                              symbol_map.highlight(hovered)
+                              })
+
+        symbol_map.on("hover", function(hovered) {
+          scatter.highlight(hovered)
+          brush.highlight(hovered)
+        })
+
+
+      }
+    
+		
+      function loadJson(file_name) {
+          d3.json(file_name, function(error, file_data) {
+                  Vis.data = file_data;
+                  
+                  Vis.data.forEach(function(d) {
+                              d.created *= 1;
+                  }); 
+                  createDiagram();
+                  });
+          
+                  
+      }
+    
+
+    </script>
+    
+<!-- Legend Float -->
+<img  src="data/thesis_legend-01.png" id="legend">
+
+</body>
+</html>
