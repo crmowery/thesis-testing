@@ -65,9 +65,9 @@
 </div>
    
     <script src="http://d3js.org/d3.v3.js"></script>
-    <script src="scatter.js"></script>
-    <script src="brush.js"></script>
-    <script src="symbol_map.js"></script>
+    <script src="js/scatter.js"></script>
+    <script src="js/brush.js"></script>
+    <script src="js/symbol_map.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="http://d3js.org/queue.v1.min.js"></script>
 
@@ -83,7 +83,7 @@
         var data;
 
 		//tells the program which data to load on top of the svg map
-        var json_file = "points.json";
+        var json_file = "data/points.json";
 
         var svg = d3.select("body").append("svg")
         .attr("width", width)
@@ -102,7 +102,7 @@
             .projection(projection);
 			
         queue()
-        .defer(d3.json, "us.json")
+        .defer(d3.json, "data/us.json")
         .await(ready);
         
 		//Function readies SVG for background map
