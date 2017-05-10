@@ -1,17 +1,16 @@
 //set the colors and the id field
 var initialColors = [
-  '#dddddd',
-  '#7bb3d1',
-  '#016eae',
-  '#dd7c8a',
-  '#8d6c8f',
-  '#4a4779',
-  '#cc0024',
-  '#8a274a',
-  '#4b264d'
+  "#4b264d",
+  "#8a274a",
+  "#cc0024",
+  "#4a4779",
+  "#8d6c8f",
+  "#dd7c8a",
+  "#016eae",
+  "#7bb3d1",
+  "#dddddd",
 ];
-var key = "Population";
-
+var key = "OBJECTID";
 
 var attNames = [];
 var pcpdata = [];
@@ -56,14 +55,9 @@ function setMap(){
       cnt++;
       pcpdata.push(d.properties);
     });
+
     expressed = attNames[4];
-	
-	//removes first three axes from pcp
-    for(var i = 0; i < pcpdata.length; i++) {
-    delete pcpdata[i]['OBJECTID'];
-    delete pcpdata[i]['Shape_Leng'];
-    delete pcpdata[i]['Shape_Area'];
-}
+
     var recolorMap = colorScale(jsonData.features);
 
     //add Iowa regions geometry to map
@@ -114,25 +108,21 @@ function setMap(){
         var point = map.latLngToLayerPoint(new L.LatLng(y, x));
         this.stream.point(point.x, point.y);
       }
-	  
+
       //visualize pcp
       var format = d3.format(".4n"), scale = d3.scale.linear().domain(
         [ -10, 20, 1000 ]).range([ 0, 800, 1000 ]);
-	  
-        var pcp = d3.parcoords()("#pcp")
-		.data(pcpdata)
-		.color(function(d) {
+
+        var pcp = d3.parcoords()("#pcp").data(pcpdata).hideAxis(["OBJECTID", "Shape_Leng", "Shape_Area", "Category"]).color(function(d) {
           //if value exists, assign it a color; otherwise assign gray
           if (d[expressed]) {
             return recolorMap(d[expressed]); //recolorMap holds the colorScale generator
           } else {
             return "#ccc";
-          }
-        })
-		.render()
-		.reorderable()
-		.brushable()
-		.on("brush", function(items) {
+          };
+        }).render().reorderable()
+                    .shadows()
+                    .brushMode("1D-axes").on("brush", function(items) {
           var selected = items.map(function(d) {
             return d[key];
           });
@@ -140,6 +130,7 @@ function setMap(){
             return selected.indexOf(d.properties[key]) > -1;
           }).style("opacity", 1);
         });
+
       });
 
     }
@@ -211,23 +202,26 @@ function setMap(){
 
       //remove the previous pcp so that they are not drawn on top of each other
       d3.select("#pcp").selectAll("*").remove();
-      var pcp = d3.parcoords()("#pcp").data(pcpdata).color(function(d) {
+
+      var pcp = d3.parcoords()("#pcp").data(pcpdata).hideAxis(["OBJECTID", "Shape_Leng", "Shape_Area", "Category"]).color(function(d) {
         //if value exists, assign it a color; otherwise assign gray
         if (d[expressed]) {
           return recolorMap(d[expressed]); //recolorMap holds the colorScale generator
         } else {
           return "#ccc";
         };
-      }).render().brushable().on("brush", function(items) {
-        var selected = items.map(function(d) {
-          return d[key];
+      }).render().reorderable()
+                    .shadows()
+                    .brushMode("1D-axes").on("brush", function(items) {
+          var selected = items.map(function(d) {
+            return d[key];
+          });
+          regions.style("opacity", 0.2).filter(function(d) {
+            return selected.indexOf(d.properties[key]) > -1;
+          }).style("opacity", 1);
         });
-        regions.style("opacity", 0.2).filter(function(d) {
-          return selected.indexOf(d.properties[key]) > -1;
-        }).style("opacity", 1);
-      });
 
-    }
+    };
 
     function format(value){
 
@@ -261,9 +255,9 @@ function setMap(){
       // d3.selectAll("#id"+props[key]) //select the current region in the DOM
       // .style("fill", "#000"); //set the enumeration unit fill to black
 
-      var labelAttribute = "<h1>"+props[expressed]+
+      var labelAttribute = "<h1>"+props["Areaname"]+
       "</h1><br><b>"+expressed+"</b>"; //label content
-      var labelName = props[key] //html string for name to go in child div
+      //var labelName = props[key]; //html string for name to go in child div
 
       // d3.select("#info-label").selectAll("*").remove();
       //create info label div
@@ -271,10 +265,10 @@ function setMap(){
       .append("div") //create the label div
       .attr("class", "infolabel")
       .attr("id", props[key]+"label") //for styling label
-      .html(labelAttribute) //add text
-      .append("div") //add child div for feature name
-      .attr("class", "labelname") //for styling name
-      .html(labelName); //add feature name to label
+      .html(labelAttribute); //add text
+      // .append("div") //add child div for feature name
+      // .attr("class", "labelname") //for styling name
+      // .html(labelName); //add feature name to label
     };
 
     function dehighlight(data){

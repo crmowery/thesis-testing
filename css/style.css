@@ -11,14 +11,20 @@ body {
 	display: table-row;
 }
 
+h2 {
+	padding-bottom: 20px;
+}
+
 #map {
   width: 960px;
   height: 500px;
+	margin: auto;
 }
 
 #pcp {
   width: 960px;
   height: 200px;
+	margin: auto;
 }
 
 #legend {
@@ -63,10 +69,9 @@ path:hover {
 }
 
 .infolabel {
-	position: absolute;
-  float: right;
 	width: 200px;
 	height: 70px;
+	margin: auto;
 	color: #fff;
 	background-color: #000;
 	border: solid thin #fff;
