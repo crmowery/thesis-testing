@@ -65,7 +65,7 @@ d3.chart.scatter = function() {
       //size
       var commentScale = d3.scale.linear()
       .domain(d3.extent(data, function(d) { return d.num_comments }))
-      .range([3, 15])
+      .range([10, 15])
 
       
     var circles = g.selectAll("circle")

@@ -7,8 +7,13 @@
 <title>Vis Test</title>
 
 <link rel="stylesheet" href="css/bootstrap.css" >
+<link rel="stylesheet" href="css/leaflet.css">
+<script src="https://d3js.org/d3.v3.js"></script>
 
 <style>
+	h2 {
+	padding-bottom: 20px;
+}
       .axis {
         font-size: 10px;
       }
@@ -28,10 +33,11 @@
 	#legend {
 	position: absolute;
 	right: 0px;
-	top: 300px;
+	top: 500px;
 	height: 250px;
 	width: 250px;
 }
+
     </style>
 </head>
 <body>
@@ -58,20 +64,56 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <h1 class="text-center">Test B</h1>
+      <h2 class="text-center">Test B: Linked Scatterplot and Map</h2>
     </div>
   </div>
-  <hr>
 </div>
    
-    <script src="https://d3js.org/d3.v3.js"></script>
+<!-- Accordian Info -->
+<div class="container">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Overview</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">This visualization represents population data and the associated data uncertainty. Uncertainty represents how reliable the data; the higher the value the less reliable it is for anaylsis. In this visualization, there are three parts: (1) The scatterplot on the left, which graphs the two variables. (2) The map on the right, which represents the data spatially.(3) The brush on the bottom, which is a selectable axis of the uncertainty values. The last element is the legend on the far right, which shows what each color represents.</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Task 1</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body"> The first task is to select approx. the 50% highest uncertainty values.</div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Task 2</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body"> The second task is to identify if uncertainty appears in a pattern or is generally random across the data.</div>
+      </div>
+    </div>
+  </div> 
+</div>
+    <hr>
+    
     <script src="js/scatter.js"></script>
     <script src="js/brush.js"></script>
     <script src="js/symbol_map.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script src="https://d3js.org/queue.v1.min.js"></script>
 
-  
+  <div class="container">
+   <div class="row">
     <script>
         
         var Vis = {};
@@ -177,9 +219,17 @@
     
 
     </script>
-    
+  </div>
+  </div>
+	
 <!-- Legend Float -->
 <img  src="data/thesis_legend-01.png" id="legend">
 
+<!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!--link to main JavaScript file-->
+    <script src="js/main.js"></script>
 </body>
 </html>

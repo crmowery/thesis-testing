@@ -255,7 +255,7 @@ function setMap(){
       // d3.selectAll("#id"+props[key]) //select the current region in the DOM
       // .style("fill", "#000"); //set the enumeration unit fill to black
 
-      var labelAttribute = "<h1>"+props["Areaname"]+
+      var labelAttribute = "<h1>"+props["Category"]+
       "</h1><br><b>"+expressed+"</b>"; //label content
       //var labelName = props[key]; //html string for name to go in child div
 

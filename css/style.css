@@ -45,7 +45,7 @@ svg {
 
 path {
   fill: #000;
-  fill-opacity: .6;
+  fill-opacity: .8;
   stroke: #fff;
   stroke-width: 1.5px;
 }
@@ -58,7 +58,7 @@ path:hover {
 .regions {
   fill: #fff;
   stroke: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }
 
 .regions2 {

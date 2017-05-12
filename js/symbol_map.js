@@ -6,7 +6,7 @@ d3.chart.symbol_map = function() {
   var width = 400;
   var height = 400;
   var cx = 10;
-    var size_scale = 30;
+    var size_scale = 25;
   var dispatch = d3.dispatch(chart, "hover");
     
     var projection = d3.geo.albersUsa()
