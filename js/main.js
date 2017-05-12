@@ -1,14 +1,14 @@
 //set the colors and the id field
 var initialColors = [
-  "#4b264d",
-  "#8a274a",
   "#cc0024",
-  "#4a4779",
-  "#8d6c8f",
+  "#8a274a",
+  "#4b264d",
   "#dd7c8a",
-  "#016eae",
-  "#7bb3d1",
+  "#8d6c8f",
+  "#4a4779",
   "#dddddd",
+  "#7bb3d1",
+  "#016eae",
 ];
 var key = "OBJECTID";
 
@@ -113,7 +113,7 @@ function setMap(){
       var format = d3.format(".4n"), scale = d3.scale.linear().domain(
         [ -10, 20, 1000 ]).range([ 0, 800, 1000 ]);
 
-        var pcp = d3.parcoords()("#pcp").data(pcpdata).hideAxis(["OBJECTID", "Shape_Leng", "Shape_Area", "Category"]).color(function(d) {
+        var pcp = d3.parcoords()("#pcp").data(pcpdata).hideAxis(["OBJECTID", "Shape_Leng", "Shape_Area", "Category", "Label"]).color(function(d) {
           //if value exists, assign it a color; otherwise assign gray
           if (d[expressed]) {
             return recolorMap(d[expressed]); //recolorMap holds the colorScale generator
@@ -255,7 +255,7 @@ function setMap(){
       // d3.selectAll("#id"+props[key]) //select the current region in the DOM
       // .style("fill", "#000"); //set the enumeration unit fill to black
 
-      var labelAttribute = "<h1>"+props["Category"]+
+      var labelAttribute = "<h1>"+props["Label"]+
       "</h1><br><b>"+expressed+"</b>"; //label content
       //var labelName = props[key]; //html string for name to go in child div
 
